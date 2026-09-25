@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: wystf-edge
+    runtime: docker
+    plan: free
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /_edge/health
+    envVars:
+      - key: UPSTREAM_URL
+        value: https://mickaels-macbook-pro.tail0da6e1.ts.net
+      - key: UPSTREAM_HOST
+        value: mickaels-macbook-pro.tail0da6e1.ts.net
