@@ -1,0 +1,25 @@
+{
+	auto_https off
+	admin off
+}
+
+:{$PORT:10000} {
+	encode zstd gzip
+
+	handle /_edge/health {
+		respond "ok" 200
+	}
+
+	handle {
+		reverse_proxy {$UPSTREAM_URL} {
+			header_up Host {$UPSTREAM_HOST}
+			header_up X-Forwarded-Proto https
+
+			transport http {
+				tls_server_name {$UPSTREAM_HOST}
+			}
+		}
+	}
+
+	header -Server
+}
